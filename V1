@@ -1,0 +1,94 @@
+
+
+const int potarPin1 = A0;  
+const int potarPin2 = A1; 
+const int potarPin3 = A2; 
+const int potarPin4 = A3; 
+const int ledPin1 = 9; 
+const int ledPin2 = 10; 
+const int ledPin3 = 11; 
+const int ledPin4 = 3; 
+const int ledPin5 = 5; 
+const int ledPin6 = 6; 
+int sensorValue1 = 0;   
+int sensorValue2 = 0; 
+int sensorValue3 = 0;
+int sensorValue4 = 0;
+int outputValue1 = 0;       
+int outputValue2 = 0;
+int outputValue3 = 0;
+int outputValue4 = 0;       
+int outputValue5 = 0;
+int outputValue6 = 0;
+
+void setup() {
+  // initialize serial communications at 9600 bps:
+  Serial.begin(9600);
+   pinMode(ledPin1, OUTPUT);
+   pinMode(ledPin2, OUTPUT);
+   pinMode(ledPin3, OUTPUT);
+   pinMode(ledPin4, OUTPUT);
+   pinMode(ledPin5, OUTPUT);
+   pinMode(ledPin6, OUTPUT);
+    
+}
+
+void loop() {
+  // read the analog in value:
+  sensorValue1 = analogRead(potarPin1);
+  sensorValue2 = analogRead(potarPin2);
+  sensorValue3 = analogRead(potarPin3);
+  sensorValue4 = analogRead(potarPin4);
+  // map it to the range of the analog out:
+  
+  outputValue1 = map(sensorValue1, 0, 1023, 0, 255);
+  outputValue2 = map(sensorValue2, 0, 1023, 0, 255);
+  outputValue3 = map(sensorValue3, 0, 1023, 0, 255);
+  outputValue4 = map(sensorValue1, 0, 1023, 0, 255);
+  outputValue5 = map(sensorValue2, 0, 1023, 0, 255);
+  outputValue6 = map(sensorValue3, 0, 1023, 0, 255);
+  // change the analog out value:
+  analogWrite(ledPin1, outputValue1);
+  analogWrite(ledPin2, outputValue2);
+  analogWrite(ledPin3, outputValue3);
+  analogWrite(ledPin4, outputValue1);
+  analogWrite(ledPin5, outputValue2);
+  analogWrite(ledPin6, outputValue3);
+  // print the results to the Serial Monitor:
+  Serial.print("sensor1 = ");
+  Serial.print(sensorValue1);
+  Serial.print("\toutput1 = ");
+  Serial.print(outputValue1);
+  Serial.print("\tsensor2= ");
+  Serial.print(sensorValue2);
+  Serial.print("\toutput2  = ");
+  Serial.print(outputValue2);
+  Serial.print("  sensor3 = ");
+  Serial.print(sensorValue3);
+  Serial.print("\toutput3 = ");
+  Serial.print(outputValue3);
+  Serial.print("  sensor4 = ");
+  Serial.println(sensorValue4);
+  // wait 2 milliseconds before the next loop for the analog-to-digital
+  // converter to settle after the last reading:
+  delay(2);
+    // Strobe
+int potarValue = analogRead(potarPin4);
+ int refreshRate = map(potarValue, 0, 1023, 1000,0);
+
+ digitalWrite(ledPin1, HIGH);
+ digitalWrite(ledPin2, HIGH);
+ digitalWrite(ledPin3, HIGH);
+ digitalWrite(ledPin4, HIGH);
+ digitalWrite(ledPin5, HIGH);
+ digitalWrite(ledPin6, HIGH);
+ delayMicroseconds(refreshRate);
+
+ digitalWrite(ledPin1, LOW);
+ digitalWrite(ledPin2, LOW);
+ digitalWrite(ledPin3, LOW);
+ digitalWrite(ledPin4, LOW);
+ digitalWrite(ledPin5, LOW);
+ digitalWrite(ledPin6, LOW);
+ delay(refreshRate);
+}
